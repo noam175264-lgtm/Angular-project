@@ -1,0 +1,41 @@
+<footer class="footer-simple">
+  <mat-toolbar color="primary" class="footer-toolbar-simple">
+    <mat-toolbar-row class="footer-content-simple">
+      <!-- Left: Brand -->
+      <div class="footer-brand-simple">
+        <mat-icon>task_alt</mat-icon>
+        <span>TaskFlow</span>
+      </div>
+
+      <span class="spacer"></span>
+
+      <!-- Center: Links -->
+      <nav class="footer-nav-simple">
+        <a mat-button routerLink="/about">About</a>
+        <a mat-button routerLink="/teams">Teams</a>
+        <a mat-button routerLink="/contact">Contact</a>
+      </nav>
+
+      <span class="spacer"></span>
+
+      <!-- Right: Copyright & Social -->
+      <div class="footer-right-simple">
+        <span class="copyright-simple">
+          <mat-icon>copyright</mat-icon>
+          {{ currentYear }} TaskFlow
+        </span>
+        <div class="social-simple">
+          <a mat-icon-button href="https://github.com" target="_blank" matTooltip="GitHub">
+            <mat-icon>code</mat-icon>
+          </a>
+          <a mat-icon-button href="https://twitter.com" target="_blank" matTooltip="Twitter">
+            <mat-icon>tag</mat-icon>
+          </a>
+          <a mat-icon-button href="https://linkedin.com" target="_blank" matTooltip="LinkedIn">
+            <mat-icon>work</mat-icon>
+          </a>
+        </div>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
+</footer>

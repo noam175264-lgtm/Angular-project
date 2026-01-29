@@ -1,0 +1,88 @@
+<h2 mat-dialog-title>
+  <mat-icon color="primary">person_add</mat-icon>
+  Add Team Member
+</h2>
+
+<mat-dialog-content>
+  @if (users$ | async; as users) {
+    <div class="add-member-form">
+      <!-- Users List -->
+      <div class="users-section">
+        <h3 class="section-title">
+          <mat-icon>people_outline</mat-icon>
+          Select User
+        </h3>
+        
+        <mat-radio-group class="users-list" [(ngModel)]="selectedUser">
+          @for (user of users; track user.id) {
+            <mat-radio-button [value]="user" class="user-option">
+              <div class="user-card">
+                <div class="user-avatar">
+                  <mat-icon>person</mat-icon>
+                </div>
+                <div class="user-info">
+                  <span class="user-name">{{ user.name }}</span>
+                  <span class="user-id">ID: {{ user.id }}</span>
+                </div>
+              </div>
+            </mat-radio-button>
+          }
+
+          @if (users.length === 0) {
+            <div class="empty-users">
+              <mat-icon>person_off</mat-icon>
+              <p>No users available</p>
+            </div>
+          }
+        </mat-radio-group>
+      </div>
+
+      <mat-divider></mat-divider>
+
+      <!-- Role Selection -->
+      <div class="role-section">
+        <h3 class="section-title">
+          <mat-icon>badge</mat-icon>
+          Select Role
+        </h3>
+        
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Role</mat-label>
+          <mat-select [(ngModel)]="selectedRole">
+            <mat-option value="member">
+              <mat-icon>person</mat-icon>
+              Member
+            </mat-option>
+            <mat-option value="admin">
+              <mat-icon>admin_panel_settings</mat-icon>
+              Admin
+            </mat-option>
+            <mat-option value="owner">
+              <mat-icon>workspace_premium</mat-icon>
+              Owner
+            </mat-option>
+          </mat-select>
+          <mat-icon matPrefix>flag</mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+  } @else {
+    <div class="loading-users">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading users...</p>
+    </div>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">
+    <mat-icon>close</mat-icon>
+    Cancel
+  </button>
+  <button mat-raised-button color="primary" 
+          (click)="addSelectedUsers()"
+          [disabled]="!selectedUser">
+    <mat-icon>person_add</mat-icon>
+    Add Member
+  </button>
+</mat-dialog-actions>

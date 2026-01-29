@@ -1,0 +1,81 @@
+<div class="dialog-container">
+  <h2 mat-dialog-title>
+    <mat-icon color="primary">edit</mat-icon>
+    Edit Task
+  </h2>
+
+  <mat-dialog-content>
+    <form [formGroup]="form" class="task-form">
+      <!-- Title Field -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Title</mat-label>
+        <input matInput formControlName="title" placeholder="Enter task title">
+        <mat-icon matPrefix>title</mat-icon>
+      </mat-form-field>
+
+      <!-- Description Field -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="description" 
+                  placeholder="Enter task description"
+                  rows="4"></textarea>
+        <mat-icon matPrefix>description</mat-icon>
+      </mat-form-field>
+
+      <!-- Status Field -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Status</mat-label>
+        <mat-select formControlName="status">
+          <mat-option value="todo">
+            <mat-icon>radio_button_unchecked</mat-icon>
+            To Do
+          </mat-option>
+          <mat-option value="in-progress">
+            <mat-icon>pending</mat-icon>
+            In Progress
+          </mat-option>
+          <mat-option value="done">
+            <mat-icon>check_circle</mat-icon>
+            Done
+          </mat-option>
+        </mat-select>
+        <mat-icon matPrefix>assignment</mat-icon>
+      </mat-form-field>
+
+      <!-- Priority Field -->
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Priority</mat-label>
+        <mat-select formControlName="priority">
+          <mat-option value="low">
+            <mat-icon>arrow_downward</mat-icon>
+            Low Priority
+          </mat-option>
+          <mat-option value="normal">
+            <mat-icon>remove</mat-icon>
+            Normal Priority
+          </mat-option>
+          <mat-option value="high">
+            <mat-icon>arrow_upward</mat-icon>
+            High Priority
+          </mat-option>
+          <mat-option value="urgent">
+            <mat-icon>priority_high</mat-icon>
+            Urgent Priority
+          </mat-option>
+        </mat-select>
+        <mat-icon matPrefix>flag</mat-icon>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="cancel()" type="button">
+      <mat-icon>close</mat-icon>
+      Cancel
+    </button>
+    <button mat-raised-button color="primary" (click)="save()" type="button">
+      <mat-icon>save</mat-icon>
+      Save Changes
+    </button>
+  </mat-dialog-actions>
+</div>

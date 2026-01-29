@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;600&display=swap');
+
+:host {
+  display: block;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.dialog-container {
+  min-width: 550px;
+}
+
+h2[mat-dialog-title] {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0;
+  padding: 2rem 2rem 1rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  font-family: 'Syne', sans-serif;
+  color: #1a1a2e;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+}
+
+h2[mat-dialog-title] mat-icon {
+  font-size: 2rem !important;
+  width: 2rem !important;
+  height: 2rem !important;
+}
+
+mat-dialog-content {
+  padding: 2rem !important;
+  overflow: visible;
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.02) 0%, transparent 100%);
+}
+
+.task-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 0.5rem 0;
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-form-field {
+  font-family: 'DM Sans', sans-serif;
+}
+
+mat-form-field mat-icon[matPrefix] {
+  color: #8b5cf6;
+  margin-right: 0.75rem;
+}
+
+mat-dialog-actions {
+  padding: 1rem 2rem 2rem !important;
+  gap: 1rem;
+  border-top: 2px solid rgba(0, 0, 0, 0.05);
+}
+
+mat-dialog-actions button {
+  min-width: 120px;
+  height: 48px;
+  font-weight: 600;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+mat-dialog-actions button mat-icon {
+  margin-right: 0.5rem;
+}
+
+mat-dialog-actions button[mat-button] {
+  color: #64748b;
+}
+
+mat-dialog-actions button[mat-raised-button] {
+  background: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%) !important;
+  color: white !important;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+mat-dialog-actions button[mat-raised-button]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(139, 92, 246, 0.4);
+}
+
+/* Icons in select options */
+mat-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem !important;
+}
+
+mat-option mat-icon {
+  color: #8b5cf6;
+  font-size: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+mat-option:hover {
+  background: rgba(139, 92, 246, 0.05) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .dialog-container {
+    min-width: 100%;
+  }
+  
+  .task-form {
+    gap: 1.25rem;
+  }
+  
+  h2[mat-dialog-title] {
+    font-size: 1.5rem;
+    padding: 1.5rem 1.5rem 0.75rem;
+  }
+  
+  mat-dialog-content {
+    padding: 1.5rem !important;
+  }
+  
+  mat-dialog-actions {
+    padding: 1rem 1.5rem 1.5rem !important;
+  }
+}
+  height: 18px;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .task-form {
+    min-width: auto;
+    width: 100%;
+  }
+
+  h2[mat-dialog-title] {
+    font-size: 20px;
+    padding: 20px 20px 12px;
+  }
+
+  mat-dialog-content {
+    padding: 0 20px;
+  }
+
+  mat-dialog-actions {
+    padding: 12px 20px 20px;
+    flex-direction: column;
+  }
+
+  mat-dialog-actions button {
+    width: 100%;
+  }
+}

@@ -1,0 +1,144 @@
+<div class="comments-container">
+  <!-- Header -->
+  <div class="comments-header">
+    <div class="header-content">
+      <div class="back-navigation">
+        <button mat-icon-button (click)="back()" class="back-btn">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </div>
+      <div class="header-text">
+        <h1 class="comments-title">
+          <mat-icon class="title-icon">chat_bubble_outline</mat-icon>
+          <span class="title-accent">Discussion</span>
+        </h1>
+        <p class="comments-subtitle">Task Comments & Notes</p>
+      </div>
+    </div>
+    <button 
+      mat-raised-button 
+      class="new-comment-btn"
+      (click)="createComment()"
+    >
+      <mat-icon>add_comment</mat-icon>
+      New Comment
+    </button>
+  </div>
+
+  @if (comments$ | async; as comments) {
+    <div class="comments-content">
+      <!-- Comments Counter -->
+      <div class="comments-counter">
+        <mat-icon>forum</mat-icon>
+        <span>{{ comments.length }} {{ comments.length === 1 ? 'Comment' : 'Comments' }}</span>
+      </div>
+
+      <!-- Comments Timeline -->
+      <div class="comments-timeline">
+        @for (comment of comments; track comment.id; let i = $index; let isFirst = $first; let isLast = $last) {
+          <div 
+            class="comment-item"
+            [class.first-comment]="isFirst"
+            [class.last-comment]="isLast"
+            [style.--comment-color]="getCommentColor(i)"
+          >
+            <!-- Timeline Connector -->
+            @if (!isFirst) {
+              <div class="timeline-connector"></div>
+            }
+
+            <!-- Comment Card -->
+            <mat-card class="comment-card">
+              <div class="card-glow"></div>
+              
+              <!-- Comment Header -->
+              <div class="comment-header">
+                <div class="comment-avatar" [style.background]="getCommentColor(i)">
+                  <span class="avatar-text">{{ getInitials(getUserName()) }}</span>
+                </div>
+                
+                <div class="comment-meta">
+                  <div class="meta-top">
+                    <span class="comment-author">{{ getUserName() || 'Unknown' }}</span>
+                    @if (comment.created_at) {
+                      <mat-chip class="time-chip">
+                        <mat-icon>access_time</mat-icon>
+                        {{ comment.created_at | date: 'MMM d, h:mm a' }}
+                      </mat-chip>
+                    }
+                  </div>
+                  <div class="meta-bottom">
+                    <span class="user-id-label">
+                      <mat-icon>person</mat-icon>
+                      User ID: {{ comment.userId }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Comment Body -->
+              <div class="comment-body">
+                <p class="comment-text">{{ comment.body }}</p>
+              </div>
+
+              <!-- Comment Footer -->
+              <div class="comment-footer">
+                <div class="comment-id">
+                  <mat-icon>tag</mat-icon>
+                  <span>#{{ comment.id }}</span>
+                </div>
+              </div>
+
+              <!-- Accent Line -->
+              <div class="accent-line"></div>
+            </mat-card>
+
+            <!-- Timeline Node -->
+            <div class="timeline-node">
+              <div class="node-inner"></div>
+            </div>
+          </div>
+        }
+
+        <!-- Timeline End -->
+        @if (comments.length > 0) {
+          <div class="timeline-end">
+            <mat-icon>check_circle</mat-icon>
+            <span>End of discussion</span>
+          </div>
+        }
+      </div>
+
+      <!-- Empty State -->
+      @if (comments.length === 0) {
+        <div class="empty-state">
+          <div class="empty-illustration">
+            <mat-icon class="empty-icon">chat_bubble_outline</mat-icon>
+            <div class="empty-circle"></div>
+            <div class="empty-circle-small"></div>
+          </div>
+          <h2>No Comments Yet</h2>
+          <p>Start the conversation by adding the first comment</p>
+          <button 
+            mat-raised-button 
+            color="primary"
+            class="empty-comment-btn"
+            (click)="createComment()"
+          >
+            <mat-icon>add_comment</mat-icon>
+            Add First Comment
+          </button>
+        </div>
+      }
+    </div>
+  } @else {
+    <!-- Loading State -->
+    <div class="loading-state">
+      <div class="loader-wrapper">
+        <div class="loader"></div>
+        <div class="loader-inner"></div>
+      </div>
+      <p class="loading-text">Loading comments...</p>
+    </div>
+  }
+</div>

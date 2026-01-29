@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>
+  <mat-icon color="primary">people</mat-icon>
+  Team Members
+</h2>
+
+<mat-dialog-content>
+  @if (members$ | async; as members) {
+    <div class="members-list">
+      @for (member of members; track member.id) {
+        <mat-card class="member-card">
+          <div class="member-avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+          <div class="member-info">
+            <span class="member-name">{{ member.name }}</span>
+            <span class="member-id">ID: {{ member.id }}</span>
+          </div>
+          <mat-chip class="role-chip">
+            <mat-icon>badge</mat-icon>
+            {{ member.role || 'Member' }}
+          </mat-chip>
+        </mat-card>
+      }
+
+      @if (members.length === 0) {
+        <div class="empty-members">
+          <mat-icon>person_off</mat-icon>
+          <p>No members in this team yet</p>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="loading-members">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading members...</p>
+    </div>
+  }
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button color="primary" mat-dialog-close>
+    <mat-icon>close</mat-icon>
+    Close
+  </button>
+</mat-dialog-actions>

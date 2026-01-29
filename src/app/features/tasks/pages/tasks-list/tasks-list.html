@@ -1,0 +1,222 @@
+<div class="tasks-container">
+  <div class="tasks-header">
+    <div class="header-content">
+      <div class="back-navigation">
+        <button mat-icon-button (click)="back()" class="back-btn">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </div>
+      <h1 class="tasks-title">
+        <span class="title-accent">Task</span> Board
+      </h1>
+      <p class="tasks-subtitle">Organize and track your work efficiently</p>
+    </div>
+    <button 
+      mat-raised-button 
+      class="create-task-btn"
+      (click)="createTask()"
+    >
+      <mat-icon>add_task</mat-icon>
+      Create New Task
+    </button>
+  </div>
+  
+  @if (tasks$ | async; as tasks) {
+    <div class="tasks-board">
+      <!-- Tasks Grid -->
+      <div class="tasks-grid">
+        @for (task of tasks; track task.id; let i = $index) {
+          <mat-card 
+            class="task-card"
+            [class.overdue]="isOverdue(task.due_date)"
+            [class.completed]="task.status === 'done'"
+            [style.--task-color]="getTaskColor(i)"
+          >
+            <div class="card-accent"></div>
+            <div class="card-glow"></div>
+
+            <!-- Task Header -->
+            <div class="task-header">
+              <div class="task-checkbox">
+                <mat-checkbox 
+                  [checked]="task.status === 'done'"
+                  [color]="'primary'"
+                  class="complete-checkbox"
+                ></mat-checkbox>
+              </div>
+
+              <div class="task-priority">
+                <mat-chip 
+                  class="priority-chip"
+                  [style.background]="getPriorityColor(task.priority)"
+                >
+                  <mat-icon class="priority-icon">{{ getPriorityIcon(task.priority) }}</mat-icon>
+                  <span>{{ task.priority }}</span>
+                </mat-chip>
+              </div>
+
+              <div class="task-actions">
+                <button 
+                  mat-icon-button 
+                  class="action-btn"
+                  (click)="viewComments(task, $event)"
+                  matTooltip="View Comments"
+                >
+                  <mat-icon>comment</mat-icon>
+                </button>
+                <button 
+                  mat-icon-button 
+                  [matMenuTriggerFor]="taskMenu"
+                  class="action-btn"
+                  (click)="$event.stopPropagation()"
+                >
+                  <mat-icon>more_vert</mat-icon>
+                </button>
+                <mat-menu #taskMenu="matMenu" class="task-menu">
+                  <button mat-menu-item (click)="editTask(task, $event)">
+                    <mat-icon>edit</mat-icon>
+                    <span>Edit</span>
+                  </button>
+                  <button mat-menu-item (click)="deleteTask(task, $event)">
+                    <mat-icon color="warn">delete</mat-icon>
+                    <span>Delete</span>
+                  </button>
+                </mat-menu>
+              </div>
+            </div>
+
+            <!-- Task Content -->
+            <mat-card-content>
+              <h3 class="task-title" [class.completed-text]="task.status === 'done'">
+                {{ task.title }}
+              </h3>
+              @if (task.description) {
+                <p class="task-description">
+                  {{ task.description }}
+                </p>
+              }
+
+              <!-- Task Meta -->
+              <div class="task-meta">
+                <div class="meta-row">
+                  <div class="meta-item status-item">
+                    <mat-icon 
+                      class="status-icon"
+                      [style.color]="getStatusColor(task.status)"
+                    >
+                      {{ getStatusIcon(task.status) }}
+                    </mat-icon>
+                    <span 
+                      class="status-text"
+                      [style.color]="getStatusColor(task.status)"
+                    >
+                      {{ task.status | titlecase }}
+                    </span>
+                  </div>
+
+                  @if (task.due_date) {
+                    <div class="meta-item">
+                      <mat-icon 
+                        class="meta-icon"
+                        [class.overdue-icon]="isOverdue(task.due_date)"
+                      >
+                        access_time
+                      </mat-icon>
+                      <span 
+                        class="meta-text"
+                        [class.overdue-text]="isOverdue(task.due_date)"
+                      >
+                        {{ task.due_date | date: 'MMM d' }}
+                        @if (isOverdue(task.due_date)) {
+                          <span class="overdue-label">(Overdue)</span>
+                        }
+                        @if (!isOverdue(task.due_date) && getDaysUntilDue(task.due_date) <= 3) {
+                          <span class="due-soon-label">({{ getDaysUntilDue(task.due_date) }}d left)</span>
+                        }
+                      </span>
+                    </div>
+                  }
+                </div>
+
+                @if (task.assignee_id || task.created_at) {
+                  <div class="meta-row">
+                    @if (task.assignee_id) {
+                      <div class="meta-item">
+                        <mat-icon class="meta-icon">person</mat-icon>
+                        <span class="meta-text">Assignee #{{ task.assignee_id }}</span>
+                      </div>
+                    }
+
+                    @if (task.created_at) {
+                      <div class="meta-item">
+                        <mat-icon class="meta-icon">schedule</mat-icon>
+                        <span class="meta-text">{{ task.created_at | date: 'short' }}</span>
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
+            </mat-card-content>
+
+            <!-- Task Footer -->
+            <mat-card-actions>
+              <button 
+                mat-button 
+                class="comments-btn"
+                (click)="viewComments(task, $event)"
+              >
+                <mat-icon>chat_bubble_outline</mat-icon>
+                <span>Comments</span>
+              </button>
+              <button 
+                mat-button 
+                class="edit-btn"
+                (click)="editTask(task, $event)"
+              >
+                <mat-icon>edit_note</mat-icon>
+                <span>Edit</span>
+              </button>
+            </mat-card-actions>
+
+            @if (task.status === 'done') {
+              <div class="completion-indicator">
+                <mat-icon>check_circle</mat-icon>
+              </div>
+            }
+          </mat-card>
+        }
+      </div>
+
+      <!-- Empty State -->
+      @if (tasks.length === 0) {
+        <div class="empty-state">
+          <div class="empty-illustration">
+            <mat-icon class="empty-icon">assignment</mat-icon>
+            <div class="empty-circle"></div>
+            <div class="empty-circle-small"></div>
+          </div>
+          <h2>No Tasks Yet</h2>
+          <p>Create your first task to start organizing your work</p>
+          <button 
+            mat-raised-button 
+            color="primary"
+            class="empty-create-btn"
+            (click)="createTask()"
+          >
+            <mat-icon>add_task</mat-icon>
+            Create Your First Task
+          </button>
+        </div>
+      }
+    </div>
+  } @else {
+    <!-- Loading State -->
+    <div class="loading-state">
+      <div class="loader-wrapper">
+        <div class="loader"></div>
+        <div class="loader-inner"></div>
+      </div>
+      <p class="loading-text">Loading tasks...</p>
+    </div>
+  }
+</div>

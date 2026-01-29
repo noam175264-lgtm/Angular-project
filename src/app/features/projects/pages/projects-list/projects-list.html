@@ -1,0 +1,108 @@
+<div class="projects-container">
+  <div class="projects-header">
+    <div class="header-content">
+      <div class="back-navigation">
+        <button mat-icon-button routerLink="/teams" class="back-btn">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </div>
+      <h1 class="projects-title">
+        <span class="title-accent">Active</span> Projects
+      </h1>
+      <p class="projects-subtitle">Manage and track your team's work</p>
+    </div>
+    <button mat-raised-button class="create-project-btn" (click)="createProject()">
+      <mat-icon>add</mat-icon>
+      Create New Project
+    </button>
+  </div>
+  @if(projects$ | async; as projects) {
+  <div class="projects-grid">
+    @for(project of projects; track project.id; let i = $index) {
+    <mat-card class="project-card" [style.--project-color]="getProjectColor(i)">
+      <div class="card-background"></div>
+      <div class="card-shine"></div>
+
+      <div class="card-header">
+        <div class="project-icon-wrapper">
+          <div class="project-icon" [style.background]="getProjectColor(i)">
+            <mat-icon>folder_open</mat-icon>
+          </div>
+          <div class="status-badge" [style.background]="getStatusColor(project.status)">
+            <mat-icon class="status-icon">{{ getStatusIcon(project.status) }}</mat-icon>
+            <span class="status-text">{{ project.status }}</span>
+          </div>
+        </div>
+
+      </div>
+
+      <mat-card-content>
+        <h3 class="project-name">{{ project.name }}</h3>
+        <p class="project-description">
+          {{ project.description || 'No description available' }}
+        </p>
+
+        <div class="project-meta">
+          <div class="meta-item">
+            <mat-icon class="meta-icon">calendar_today</mat-icon>
+            <span class="meta-text">{{ project.created_at | date: 'MMM d, yyyy' }}</span>
+          </div>
+          <div class="meta-item">
+            <mat-icon class="meta-icon">access_time</mat-icon>
+            <span class="meta-text">{{ project.created_at | date: 'shortTime' }}</span>
+          </div>
+        </div>
+
+        <div class="project-stats">
+          <div class="stat-badge">
+            <mat-icon>task</mat-icon>
+            <span>Tasks</span>
+          </div>
+          <div class="stat-badge">
+            <mat-icon>assignment_turned_in</mat-icon>
+            <span>0% Done</span>
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-button class="view-details-btn">
+          <mat-icon>visibility</mat-icon>
+          View Details
+        </button>
+        <button mat-button class="manage-tasks-btn" (click)="viewTasks(project.id)">
+          <mat-icon>list_alt</mat-icon>
+          Tasks
+        </button>
+      </mat-card-actions>
+
+      <div class="card-glow-corner"></div>
+      <div class="card-pattern"></div>
+    </mat-card>
+    }
+    @if(projects.length === 0) {
+    <div class="empty-state">
+      <div class="empty-illustration">
+        <mat-icon class="empty-icon">work_off</mat-icon>
+        <div class="empty-circle"></div>
+        <div class="empty-circle-small"></div>
+      </div>
+      <h2>No Projects Yet</h2>
+      <p>Start by creating your first project to organize your team's work</p>
+      <button mat-raised-button color="primary" class="empty-create-btn" (click)="createProject()">
+        <mat-icon>add_circle</mat-icon>
+        Create Your First Project
+      </button>
+    </div>
+    }
+  </div>
+  }@else{
+  <div class="loading-state" *ngIf="!(projects$ | async)">
+    <div class="loader-wrapper">
+      <div class="loader"></div>
+      <div class="loader-inner"></div>
+    </div>
+    <p class="loading-text">Loading projects...</p>
+  </div>
+  }
+</div>

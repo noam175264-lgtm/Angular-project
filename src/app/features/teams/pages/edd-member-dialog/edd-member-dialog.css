@@ -1,0 +1,241 @@
+/* Minimal CSS - Only Material Overrides */
+
+h2[mat-dialog-title] {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  padding: 24px 24px 16px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+h2[mat-dialog-title] mat-icon {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+}
+
+mat-dialog-content {
+  padding: 0 24px 16px;
+  min-width: 600px;
+  max-height: 70vh;
+  overflow: visible;
+}
+
+.add-member-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 16px 0;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.section-title mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  color: #667eea;
+}
+
+/* Users Section */
+.users-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.users-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 4px;
+}
+
+.user-option {
+  margin: 0 !important;
+  padding: 12px !important;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.user-option:hover {
+  background: rgba(102, 126, 234, 0.04);
+  border-color: rgba(102, 126, 234, 0.3);
+}
+
+.user-option.mat-mdc-radio-checked {
+  background: rgba(102, 126, 234, 0.08);
+  border-color: #667eea;
+}
+
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.user-avatar mat-icon {
+  color: white;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.user-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.user-id {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.empty-users {
+  text-align: center;
+  padding: 32px 16px;
+  color: rgba(0, 0, 0, 0.4);
+}
+
+.empty-users mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 12px;
+}
+
+.empty-users p {
+  margin: 0;
+  font-size: 14px;
+}
+
+/* Role Section */
+.role-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-option mat-icon {
+  margin-right: 8px;
+  vertical-align: middle;
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+/* Loading */
+.loading-users {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  gap: 16px;
+}
+
+.loading-users p {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 14px;
+}
+
+/* Actions */
+mat-dialog-actions {
+  padding: 16px 24px 24px;
+  gap: 12px;
+}
+
+mat-dialog-actions button {
+  min-width: 120px;
+}
+
+/* Scrollbar */
+.users-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.users-list::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+}
+
+.users-list::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.users-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  mat-dialog-content {
+    min-width: auto;
+    padding: 0 20px 12px;
+  }
+
+  h2[mat-dialog-title] {
+    font-size: 20px;
+    padding: 20px 20px 12px;
+  }
+
+  mat-dialog-actions {
+    padding: 12px 20px 20px;
+    flex-direction: column;
+  }
+
+  mat-dialog-actions button {
+    width: 100%;
+  }
+
+  .user-option {
+    padding: 10px !important;
+  }
+
+  .user-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .user-avatar mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}

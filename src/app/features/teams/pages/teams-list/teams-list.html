@@ -1,0 +1,126 @@
+<div class="teams-container">
+  <div class="teams-header">
+    <div class="header-content">
+      <h1 class="teams-title">
+        <span class="title-accent">Our</span> Teams
+      </h1>
+      <p class="teams-subtitle">Collaborate, create, and conquer together</p>
+    </div>
+    <button 
+      mat-raised-button 
+      class="create-team-btn"
+      (click)="createTeam()"
+    >
+      <mat-icon>add</mat-icon>
+      Create New Team
+    </button>
+  </div>
+
+  @if (teams$ | async; as teams) {
+    <div class="teams-grid">
+      @for (team of teams; track team.id; let i = $index) {
+        <mat-card class="team-card" [style.--team-color]="getTeamColor(i)">
+          <div class="card-background"></div>
+          <div class="card-glow"></div>
+          
+          <mat-card-header>
+            <div class="team-icon" [style.background]="getTeamColor(i)">
+              <mat-icon>groups</mat-icon>
+            </div>
+            <div class="team-header-content">
+              <mat-card-title class="team-name">{{ team.name }}</mat-card-title>
+            </div>
+          </mat-card-header>
+
+          <mat-card-content>
+            <div class="team-stats">
+              <div class="stat-item">
+                <mat-icon class="stat-icon">people</mat-icon>
+                <div class="stat-content">
+                  <span class="stat-number">{{ team.members_count || 1 }}</span>
+                  <span class="stat-label">Members</span>
+                </div>
+              </div>
+              <div class="stat-divider"></div>
+              <div class="stat-item">
+                <mat-icon class="stat-icon">folder</mat-icon>
+                <div class="stat-content">
+                  <span class="stat-label">Projects</span>
+                </div>
+              </div>
+            </div>
+
+            @if (team.createdAt) {
+              <div class="team-meta">
+                <mat-chip class="created-chip">
+                  <mat-icon>schedule</mat-icon>
+                  Created {{ team.createdAt | date: 'MMM yyyy' }}
+                </mat-chip>
+              </div>
+            }
+          </mat-card-content>
+
+          <mat-card-actions>
+            <button 
+              mat-raised-button 
+              color="primary"
+              class="add-member-btn"
+              (click)="addMember(team.id, team, $event)"
+            >
+              <mat-icon>person_add</mat-icon>
+              Add Member
+            </button>
+            <button mat-button class="view-projects-btn"
+              (click)="viewProjects(team.id)">
+              View Projects
+              <mat-icon>arrow_forward</mat-icon>
+            </button>
+            <button 
+              mat-raised-button 
+              color="primary"
+              class="delete-team-btn"
+              (click)="deleteTeam(team,$event)"
+            >
+              <mat-icon>delete</mat-icon>
+              delete Team
+            </button>
+
+            <button 
+              mat-raised-button 
+              color="primary"
+              class="view-members-btn"
+              (click)="viewMembers(team.id)"
+            >
+              <mat-icon>person</mat-icon>
+              view members
+            </button>
+          </mat-card-actions>
+
+          <div class="card-corner"></div>
+        </mat-card>
+      }
+
+      @if (teams.length === 0) {
+        <div class="empty-state">
+          <mat-icon class="empty-icon">group_off</mat-icon>
+          <h2>No Teams Yet</h2>
+          <p>Create your first team to get started</p>
+          <button 
+            mat-raised-button 
+            color="primary"
+            class="empty-create-btn"
+            (click)="createTeam()"
+          >
+            <mat-icon>add</mat-icon>
+            Create Your First Team
+          </button>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="loading-state">
+      <div class="loader"></div>
+      <p>Loading teams...</p>
+    </div>
+  }
+</div>
