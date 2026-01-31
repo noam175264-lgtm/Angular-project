@@ -26,44 +26,52 @@ type DialogType = 'team' | 'project' | 'task' | 'comment';
     <mat-dialog-content>
       <form [formGroup]="form">
         <!-- Team form -->
-        <ng-container *ngIf="dialogType === 'team'">
-          <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Team Name</mat-label>
-            <input matInput formControlName="teamName" required />
-          </mat-form-field>
-        </ng-container>
+        @if(dialogType === 'team'){
+          <ng-container >
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Team Name</mat-label>
+              <input matInput formControlName="teamName" required />
+            </mat-form-field>
+          </ng-container>
+        }
 
         <!-- Project form -->
-        <ng-container *ngIf="dialogType === 'project'">
-          <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Project Name</mat-label>
-            <input matInput formControlName="projectName" required />
-          </mat-form-field>
-          <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Description</mat-label>
-            <textarea matInput formControlName="projectDescription" rows="3"></textarea>
-          </mat-form-field>
-        </ng-container>
+        @if(dialogType === 'project'){
+          <ng-container >
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Project Name</mat-label>
+              <input matInput formControlName="projectName" required />
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Description</mat-label>
+              <textarea matInput formControlName="projectDescription" rows="3"></textarea>
+            </mat-form-field>
+          </ng-container>
+        }
 
         <!-- Task form -->
-        <ng-container *ngIf="dialogType === 'task'">
-          <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Task Title</mat-label>
-            <input matInput formControlName="taskTitle" required />
-          </mat-form-field>
-          <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Description</mat-label>
-            <textarea matInput formControlName="taskDescription" rows="3"></textarea>
-          </mat-form-field>
-        </ng-container>
+        @if(dialogType === 'task'){
+          <ng-container >
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Task Title</mat-label>
+              <input matInput formControlName="taskTitle" required />
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Description</mat-label>
+              <textarea matInput formControlName="taskDescription" rows="3"></textarea>
+            </mat-form-field>
+          </ng-container>
+        }
 
         <!-- Comment form -->
-        <ng-container *ngIf="dialogType === 'comment'">
-          <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Comment</mat-label>
-            <textarea matInput formControlName="commentBody" rows="4" required></textarea>
-          </mat-form-field>
-        </ng-container>
+        @if(dialogType === 'comment'){
+          <ng-container > 
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Comment</mat-label>
+              <textarea matInput formControlName="commentBody" rows="4" required></textarea>
+            </mat-form-field>
+          </ng-container>
+        }
       </form>
     </mat-dialog-content>
     <mat-dialog-actions align="end">

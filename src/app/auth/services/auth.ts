@@ -23,7 +23,6 @@ export class Auth {
     return this.http.post<AuthResponse>(`${environment.apiUrl}/api/auth/login`, data);
   }
 
-
   register(data: { name: string; email: string; password: string }): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${environment.apiUrl}/api/auth/register`, data);
   }
